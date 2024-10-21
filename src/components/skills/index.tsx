@@ -1,6 +1,6 @@
 import { useState } from "react";
 import skillsData from "./data.json";
-import LetterAnimation from "../letterAnimation";
+import LetterAnimation from "../letter-animation";
 
 interface Skills {
   category: string;

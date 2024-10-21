@@ -4,7 +4,7 @@ interface WorkExperience {
   company: string;
   description: string;
 }
-import LetterAnimation from "../letterAnimation";
+import LetterAnimation from "../letter-animation";
 import experiencesData from "./data.json";
 
 export const Experience = () => {

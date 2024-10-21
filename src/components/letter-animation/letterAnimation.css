@@ -1,37 +1,15 @@
-.letter-animation {
-  display: flex; /* Use flexbox for alignment */
-  justify-content: center;
-  align-items: center;
-  font-size: calc(10vw + 10vh); /* Responsive font size */
-  max-width: 90%;
-  width: 100%;
-  opacity: 0; /* Start hidden */
-  transition: opacity 0.3s ease-in;
-  position: absolute;
-  top: 2%;
-  opacity: 1;
-  pointer-events: none;
+.letter-animation-container {
+  display: flex;
+  flex-direction: column; /* Stack words vertically */
+}
+
+.word-line {
+  display: inline-block; /* Keep each word in its own line */
+  margin-bottom: 10px; /* Add space between words */
+  font-size: 5vw; /* Adjust font size based on viewport width */
 }
 
 .letter {
-
-  transform: translateY(20px); /* Start with an upward translation */
-  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-}
-
-.letter.animate {
-  opacity: 1; /* Fade in */
-  transform: translateY(0); /* Move to original position */
-  animation: fadeInUp 0.5s forwards; /* Animate letters */
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px); /* Start with an upward translation */
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0); /* End at normal position */
-  }
+  display: inline-block; /* Animate each letter separately */
+  opacity: 1; /* Ensure letters are visible initially */
 }

@@ -1,75 +1,78 @@
-import './letterAnimation.css';
-import { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useTheme } from '../../context/ThemeContext';
+import './letterAnimation.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface LetterAnimationProps {
   text: string;
 }
 
 const LetterAnimation: React.FC<LetterAnimationProps> = ({ text }) => {
-  const { isDarkTheme } = useTheme(); // Access theme from context
-  const [letterColors, setLetterColors] = useState<string[]>([]);
-  const [isVisible, setIsVisible] = useState<boolean>(false); // Track visibility
-  const containerRef = useRef<HTMLDivElement>(null); // Ref for the animation container
+  const wordRefs = useRef<HTMLDivElement[]>([]);
+  const { isDarkTheme } = useTheme();
 
-  const colors = {
-    light: ['#333', '#555', '#777', '#999'], // Darker shades for light theme
-    dark: ['#EEE', '#CCC', '#AAA', '#888'],  // Lighter shades for dark theme
-  };
+  useEffect(() => {
+    // Clear previous ScrollTriggers and animations
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    gsap.killTweensOf(wordRefs.current);
 
-  // Color generation function per letter
-  const generateColors = () => {
-    const newColors = text.split('').map(() => {
-      return isDarkTheme
-        ? colors.dark[Math.floor(Math.random() * colors.dark.length)]
-        : colors.light[Math.floor(Math.random() * colors.light.length)];
+    // Set the grey color for each letter based on the theme
+    wordRefs.current.forEach((word) => {
+      Array.from(word.children).forEach((letter) => {
+        const randomGrey = isDarkTheme ? randomLighterGrey() : randomDarkerGrey();
+        gsap.set(letter, { color: randomGrey });
+      });
     });
-    setLetterColors(newColors);
+
+    // Animate each word when it comes into view or if it's already in view on load
+    wordRefs.current.forEach((word, index) => {
+      gsap.fromTo(
+        word.children, // Target individual letters
+        { opacity: 0, y: 50 }, // Initial state: hidden and moved down
+        {
+          opacity: 1,
+          y: 0, // Animate to normal position
+          stagger: 0.1, // Stagger the letter animations
+          ease: 'power3.out',
+          duration: 0.6,
+          scrollTrigger: {
+            trigger: word, // Trigger the animation when the word is in view
+            start: 'top 50%', // Start animation when word is 80% from the top of the viewport
+            toggleActions: 'play reset play reset', // Replay animation every time it comes into view
+            markers: true, // Use markers for debugging if needed
+            immediateRender: true, // Ensure correct animation rendering
+            invalidateOnRefresh: true, // Update animation on refresh if already in view
+          },
+        }
+      );
+    });
+  }, [isDarkTheme, text]);
+
+  // Helper function to generate random lighter grey shades for dark theme
+  const randomLighterGrey = () => {
+    const greyValue = Math.floor(Math.random() * (220 - 170 + 1) + 170); // Lighter grey for dark mode
+    return `rgb(${greyValue}, ${greyValue}, ${greyValue})`;
   };
 
-  // Generate new colors whenever text or theme changes
-  useEffect(() => {
-    generateColors();
-  }, [text, isDarkTheme]);
-
-  // Intersection Observer to track when the element is in view
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        setIsVisible(entry.isIntersecting); // Update visibility state
-      },
-      { threshold: 0.1 } // Trigger when 10% of the component is in view
-    );
-
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-
-    return () => {
-      if (containerRef.current) {
-        observer.unobserve(containerRef.current);
-      }
-    };
-  }, []);
-
-  if (!letterColors.length) {
-    return null; // Avoid rendering if colors haven't been generated
-  }
+  // Helper function to generate random darker grey shades for light theme
+  const randomDarkerGrey = () => {
+    const greyValue = Math.floor(Math.random() * (100 - 50 + 1) + 50); // Darker grey for light mode
+    return `rgb(${greyValue}, ${greyValue}, ${greyValue})`;
+  };
 
   return (
-    <div ref={containerRef} className="letter-animation">
+    <div className="letter-animation-container">
       {text.split(' ').map((word, wordIndex) => (
-        <div key={wordIndex} className="word">
+        <div
+          key={wordIndex}
+          ref={(el) => (wordRefs.current[wordIndex] = el!)} // Reference each word div
+          className="word-line" // Custom class for styling each word on a new line
+        >
           {word.split('').map((letter, letterIndex) => (
-            <span
-              key={letterIndex}
-              className={`letter ${isVisible ? 'animate' : ''}`}
-              style={{
-                color: letterColors[letterIndex],
-                animationDelay: `${(wordIndex + letterIndex) * 0.1}s`,
-              }}
-            >
+            <span key={letterIndex} className="letter">
               {letter}
             </span>
           ))}
