@@ -1,85 +1,80 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
 import './letterAnimation.css';
+import { useState, useEffect, useRef } from 'react';
+import { useTheme } from '../../context/ThemeContext';
 
 interface LetterAnimationProps {
   text: string;
-  smallScreenText: string; // Additional prop for small screen text
 }
 
-// Function to generate a random light gray tone
-const getRandomLightGrayTone = () => {
-  const randomShade = Math.floor(Math.random() * 100) + 156; // Random value between 156 and 255
-  return `rgba(${randomShade}, ${randomShade}, ${randomShade}, 1)`; // Light shades of gray
+const LetterAnimation: React.FC<LetterAnimationProps> = ({ text }) => {
+  const { isDarkTheme } = useTheme(); // Access theme from context
+  const [letterColors, setLetterColors] = useState<string[]>([]);
+  const [isVisible, setIsVisible] = useState<boolean>(false); // Track visibility
+  const containerRef = useRef<HTMLDivElement>(null); // Ref for the animation container
 
-};
+  const colors = {
+    light: ['#333', '#555', '#777', '#999'], // Darker shades for light theme
+    dark: ['#EEE', '#CCC', '#AAA', '#888'],  // Lighter shades for dark theme
+  };
 
-const LetterAnimation: React.FC<LetterAnimationProps> = ({ text, smallScreenText }) => {
-  const textRef = useRef<HTMLDivElement>(null);
-  const [fontSize, setFontSize] = useState('10vw'); // Initial font size
-  const [displayText, setDisplayText] = useState(text); // State to hold the displayed text
+  // Color generation function per letter
+  const generateColors = () => {
+    const newColors = text.split('').map(() => {
+      return isDarkTheme
+        ? colors.dark[Math.floor(Math.random() * colors.dark.length)]
+        : colors.light[Math.floor(Math.random() * colors.light.length)];
+    });
+    setLetterColors(newColors);
+  };
 
+  // Generate new colors whenever text or theme changes
   useEffect(() => {
-    const updateFontSize = () => {
-      const viewportHeight = window.innerHeight;
-      const viewportWidth = window.innerWidth;
+    generateColors();
+  }, [text, isDarkTheme]);
 
-      // Calculate font size based on viewport size
-      const maxFontSize = Math.min(viewportWidth, viewportHeight / 5); // Adjusted ratio for better fit
-      setFontSize(`${maxFontSize}px`);
+  // Intersection Observer to track when the element is in view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        setIsVisible(entry.isIntersecting); // Update visibility state
+      },
+      { threshold: 0.1 } // Trigger when 10% of the component is in view
+    );
 
-      // Set text based on screen size
-      if (viewportWidth < 600) {
-        setDisplayText(smallScreenText);
-      } else {
-        setDisplayText(text);
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
       }
     };
+  }, []);
 
-    updateFontSize();
-
-    // Add resize event listener
-    window.addEventListener('resize', updateFontSize);
-    
-    return () => {
-      window.removeEventListener('resize', updateFontSize);
-    };
-  }, [text, smallScreenText]);
-
-  useEffect(() => {
-    if (textRef.current) {
-      const letters = textRef.current.querySelectorAll('.letter');
-
-      // Animate each letter to fade in and scale up
-      gsap.fromTo(
-        letters,
-        { opacity: 0, scale: 0.5 },
-        {
-          opacity: 1,
-          scale: 1,
-          duration: 0.5,
-          stagger: 0.1,
-          ease: 'power1.out',
-          color: () => getRandomLightGrayTone(), // Change color to a random light gray tone
-        }
-      );
-    }
-  }, [displayText]);
-
-  const splitTextIntoLetters = (text: string) =>
-    text.split(' ').map((word, index) => (
-      <span key={index} className="word" style={{ fontSize }}>
-        {Array.from(word).map((char, charIndex) => (
-          <span key={charIndex} className="letter">
-            {char}
-          </span>
-        ))}
-      </span>
-    ));
+  if (!letterColors.length) {
+    return null; // Avoid rendering if colors haven't been generated
+  }
 
   return (
-    <div ref={textRef} className="letter-animation">
-      {splitTextIntoLetters(displayText)}
+    <div ref={containerRef} className="letter-animation">
+      {text.split(' ').map((word, wordIndex) => (
+        <div key={wordIndex} className="word">
+          {word.split('').map((letter, letterIndex) => (
+            <span
+              key={letterIndex}
+              className={`letter ${isVisible ? 'animate' : ''}`}
+              style={{
+                color: letterColors[letterIndex],
+                animationDelay: `${(wordIndex + letterIndex) * 0.1}s`,
+              }}
+            >
+              {letter}
+            </span>
+          ))}
+        </div>
+      ))}
     </div>
   );
 };

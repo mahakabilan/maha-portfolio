@@ -1,8 +1,10 @@
+import LetterAnimation from "../letterAnimation";
+
 export const AboutMe = () => {
   return (
-    <div className="flex flex-col h-screen text-primaryTextColor">
+    <div className="flex flex-col h-screen text-primaryTextColor relative">
       <div className="text-5xl lg:text-8xl font-bold">
-        <h1>ABOUT ME</h1>
+       <LetterAnimation text="About Me"/>
       </div>
 
       <div className="flex flex-row w-full pt-20">

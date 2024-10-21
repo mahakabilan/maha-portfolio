@@ -1,26 +1,37 @@
-/* LetterAnimation.css */
 .letter-animation {
-  display: flex;
-  flex-direction: column; /* Stack words vertically */
-  height: 100vh; /* Full viewport height */
-  width: 95vw; /* Full viewport width */
-  overflow: hidden; /* Prevent overflow of words */
-  text-align: left; /* Center the text */
+  display: flex; /* Use flexbox for alignment */
+  justify-content: center;
+  align-items: center;
+  font-size: calc(10vw + 10vh); /* Responsive font size */
+  max-width: 90%;
+  width: 100%;
+  opacity: 0; /* Start hidden */
+  transition: opacity 0.3s ease-in;
   position: absolute;
   top: 2%;
-  left: 2%;
-  opacity: .5;
-  z-index: 0;
+  opacity: 1;
   pointer-events: none;
 }
 
-.word {
-  display: block; /* Each word occupies its own line */
-  font-weight: bold;
-  margin: 0; /* Remove default margin */
+.letter {
+
+  transform: translateY(20px); /* Start with an upward translation */
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
 
-.letter {
-  display: inline-block; /* Each letter is inline-block to allow animation */
-  opacity: 0; /* Letters start hidden */
+.letter.animate {
+  opacity: 1; /* Fade in */
+  transform: translateY(0); /* Move to original position */
+  animation: fadeInUp 0.5s forwards; /* Animate letters */
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px); /* Start with an upward translation */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0); /* End at normal position */
+  }
 }

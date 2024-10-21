@@ -4,15 +4,15 @@ interface WorkExperience {
   company: string;
   description: string;
 }
+import LetterAnimation from "../letterAnimation";
 import experiencesData from "./data.json";
 
 export const Experience = () => {
   const experiences: WorkExperience[] = experiencesData.workExperience;
   return (
-    <div className="flex flex-col text-primaryTextColor">
+    <div className="flex flex-col text-primaryTextColor relative">
       <div className="text-5xl lg:text-8xl font-bold text-right">
-        <h1>RELEVANT</h1>
-        <h1>EXPERIENCE</h1>
+     <LetterAnimation text="Experience"/>
       </div>
 
       <div className="flex flex-row w-full pt-20">

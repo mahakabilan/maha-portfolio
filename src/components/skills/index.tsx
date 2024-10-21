@@ -1,5 +1,6 @@
 import { useState } from "react";
 import skillsData from "./data.json";
+import LetterAnimation from "../letterAnimation";
 
 interface Skills {
   category: string;
@@ -21,10 +22,9 @@ export const Skills = () => {
   };
 
   return (
-    <div className="flex flex-col text-primaryTextColor">
+    <div className="flex flex-col text-primaryTextColor relative">
       <div className="text-5xl lg:text-8xl font-bold pt-10">
-        <h1>TECHNICAL</h1>
-        <h1>SKILLS</h1>
+       <LetterAnimation text="Skills" />
       </div>
 
       <div className="flex flex-row w-full pt-20">
