@@ -12,7 +12,7 @@ export default {
         skillsLightAccent: "var(--skills-light-accent)",
       },
       fontFamily: {
-        sans: ["Intel", "sans-serif"], // Overrides the default sans-serif
+        sans: ["Outfit", "sans-serif"], // Overrides the default sans-serif
       },
       backgroundImage: (theme) => ({
         lightThemeGradient: "var(--light-theme-gradient)",
