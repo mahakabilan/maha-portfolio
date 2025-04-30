@@ -1,0 +1,64 @@
+{
+  "languages": [
+    { "name": "HTML5", "description": "Markup language for structuring content on the web" },
+    { "name": "CSS3", "description": "Style sheet language used to describe the look and formatting of a document" },
+    { "name": "JavaScript", "description": "Programming language for web development, used to add interactivity" },
+    { "name": "TypeScript", "description": "Typed superset of JavaScript that compiles to plain JavaScript" }
+  ],
+  "frameworksAndLibraries": [
+    { "name": "React", "description": "JavaScript library for building user interfaces" },
+    { "name": "Next.js", "description": "React framework with SSR and API support" },
+    { "name": "Redux", "description": "State management library for JavaScript applications" },
+    { "name": "Vue.js", "description": "Progressive JavaScript framework for building UIs" },
+    { "name": "Angular", "description": "Framework for building client applications in HTML and TypeScript" },
+    { "name": "jQuery", "description": "JavaScript library that simplifies DOM manipulation" }
+  ],
+  "stylingAndUI": [
+    { "name": "SASS/SCSS", "description": "CSS preprocessor with variables, nesting, and more" },
+    { "name": "Tailwind CSS", "description": "Utility-first CSS framework" },
+    { "name": "Bootstrap", "description": "CSS framework with prebuilt components and grid system" },
+    { "name": "Styled Components", "description": "CSS-in-JS tool for styling React components" },
+    { "name": "CSS Modules", "description": "Locally scoped CSS for components" },
+    { "name": "PostCSS", "description": "Tool for transforming CSS with JavaScript plugins" }
+  ],
+  "toolsAndBuild": [
+    { "name": "Webpack", "description": "Module bundler for JavaScript applications" },
+    { "name": "Vite", "description": "Fast frontend build tool and dev server" },
+    { "name": "Babel", "description": "JavaScript compiler that lets you use next-gen JS" },
+    { "name": "ESLint", "description": "Linting utility for identifying and fixing problems in JS code" },
+    { "name": "Prettier", "description": "Code formatter that enforces consistent style" },
+    { "name": "npm/yarn/pnpm", "description": "JavaScript package managers" }
+  ],
+  "testing": [
+    { "name": "Jest", "description": "Testing framework for JavaScript" },
+    { "name": "React Testing Library", "description": "Tool for testing React components" },
+    { "name": "Cypress", "description": "End-to-end testing framework for web apps" },
+    { "name": "Playwright", "description": "E2E test automation framework by Microsoft" },
+    { "name": "Mocha", "description": "JavaScript test framework for Node.js" }
+  ],
+  "versionControlAndCI": [
+    { "name": "Git", "description": "Version control system for tracking changes in source code" },
+    { "name": "GitHub/GitLab", "description": "Code hosting platforms with CI/CD integration" },
+    { "name": "GitHub Actions", "description": "CI/CD platform built into GitHub" },
+    { "name": "Bitbucket Pipelines", "description": "CI/CD tool for Bitbucket repositories" }
+  ],
+  "deployment": [
+    { "name": "Netlify", "description": "Platform for deploying static sites and frontend apps" },
+    { "name": "Vercel", "description": "Platform for frontend developers, used to deploy Next.js apps" },
+    { "name": "Docker", "description": "Containerization platform often used in deployment workflows" },
+    { "name": "Nginx", "description": "Web server often used to serve static frontend apps" }
+  ],
+  "accessibilityAndPerformance": [
+    { "name": "Lighthouse", "description": "Tool for auditing performance, accessibility, SEO, and more" },
+    { "name": "aXe", "description": "Accessibility testing engine for automated browser tests" },
+    { "name": "ARIA", "description": "Accessible Rich Internet Applications attributes for HTML" },
+    { "name": "Responsive Design", "description": "Design that adapts to different screen sizes" }
+  ],
+  "softSkills": [
+    { "name": "Communication", "description": "Ability to clearly articulate ideas and technical concepts" },
+    { "name": "Collaboration", "description": "Working effectively with other developers, designers, and stakeholders" },
+    { "name": "Problem Solving", "description": "Identifying and resolving bugs or architectural issues efficiently" },
+    { "name": "Time Management", "description": "Prioritizing tasks and meeting deadlines in agile environments" },
+    { "name": "Mentorship", "description": "Supporting and guiding junior developers or peers" }
+  ]
+}

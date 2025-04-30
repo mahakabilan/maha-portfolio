@@ -24,6 +24,22 @@ export default function Experience() {
           <li>Established an atomic CSS system and collaborated with teams using Storybook.</li>
         </ul>
       </div>
+      <div>
+        <h3 className="text-xl font-bold">Chief Editor and Lead Developer – Digisparks Infotech</h3>
+        <p className="italic">Aug 2012 – Dec 2014, Bengaluru, India</p>
+        <ul className="list-disc ml-6">
+          <li>Developed the Wordpress website theme and interactive demos.</li>
+          <li>Designed & developed demo.techglimpse.com & apps.techglimpse.com & petshack.ae.</li>
+        </ul>
+      </div>
+      <div>
+        <h3 className="text-xl font-bold">Applications Developer – iNautix Technologies</h3>
+        <p className="italic">June 2010 – July 2012, Chennai, India</p>
+        <ul className="list-disc ml-6">
+          <li>Developed and supported a legacy enterprise billing system for solutions, ensuring seamless operation and compliance with industry standards.</li>
+          <li>Played a key role in implementing secure coding platforms for BNY Mellon, contributing to enhanced data protection and cybersecurity measures.</li>
+        </ul>
+      </div>
       </article>
     </section>
   );
